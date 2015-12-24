@@ -10,7 +10,15 @@ defmodule CharacterGenerator do
   def percent(values), do: Enum.map(values, &LetterGrade.percent/1)
 
   def multiply(values, multiplier), do: Enum.map(values, &(&1 * multiplier))
-  def add(values, bonus), do: values |> Enum.zip(bonus |> resize_bonus(values)) |> Enum.map(&(elem(&1,0)+elem(&1,1)))
+  def add(values, bonus) do
+    values
+      |> Enum.zip(bonus
+      |> resize_bonus(values))
+      |> Enum.map(&(elem(&1,0)+elem(&1,1)))
+  end
+  def roll(values, x, y, c \\ 0), do: values |> Enum.map(&(&1+xdy(x,y,c)))
+  def xdy(0, _y, c), do: c
+  def xdy(x, y, c), do: xdy x-1, y, c + :random.uniform y
 
   defp _point_buy(points, _keys, values) when points < 1, do: values |> Tuple.to_list
   defp _point_buy(points, keys, values), do: _point_buy(points - 1, keys, (values |> allocate_random_point))
