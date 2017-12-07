@@ -1,6 +1,6 @@
 # CharacterGenerator
 
-**TODO: Add description**
+Traveller inspired character generator written in elixir.
 
 ## Installation
 
